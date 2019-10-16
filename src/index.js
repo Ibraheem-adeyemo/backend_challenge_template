@@ -9,19 +9,16 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import helmet from 'helmet';
 import cors from 'cors';
+import passport from 'passport';
+// eslint-disable-next-line no-unused-vars
+import facebookPassport from './auth/facebook.passport';
 import router from './routes';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-
 const app = express();
-const corsOptions = {
-  credentials: true,
-  origin: [],
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-app.use(cors(corsOptions));
 
+app.use(cors());
 
 // compression and header security middleware
 app.use(compression());
@@ -49,6 +46,9 @@ app.use(
 );
 
 app.use('/stripe/charge', express.static(`${__dirname}/public`));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(router);
 
@@ -86,7 +86,7 @@ app.use((err, req, res, next) => {
 });
 
 // configure port and listen for requests
-const port = parseInt(process.env.NODE_ENV === 'test' ? 8378 : process.env.PORT, 10) || 80;
+const port = parseInt(process.env.NODE_ENV === 'test' ? 8378 : process.env.PORT, 10) || 3700;
 export const server = app.listen(port, () => {
   log(`Server is running on http://localhost:${port} `);
 });

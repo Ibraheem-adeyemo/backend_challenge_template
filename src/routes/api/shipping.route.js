@@ -5,5 +5,6 @@ const router = Router();
 
 router.get('/shipping/regions', ShippingController.getShippingRegions);
 router.get('/shipping/regions/:shipping_region_id', ShippingController.getShippingType);
+// router.get('/shipping/regions/:shipping_region_id', ShippingController.getAllShippingInARegion)
 
 export default router;

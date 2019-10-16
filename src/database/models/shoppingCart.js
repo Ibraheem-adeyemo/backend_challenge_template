@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       cart_id: {
         type: DataTypes.STRING(32),
         allowNull: false,
+        unique: true,
       },
       product_id: {
         type: DataTypes.INTEGER,
